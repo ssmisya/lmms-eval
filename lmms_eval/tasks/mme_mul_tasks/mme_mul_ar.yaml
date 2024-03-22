@@ -1,0 +1,126 @@
+dataset_kwargs:
+  data_files:
+    test:
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/existence/json_labels/mme_existence_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/count/json_labels/mme_count_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/position/json_labels/mme_position_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/color/json_labels/mme_color_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/posters/json_labels/mme_posters_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/celebrity/json_labels/mme_celebrity_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/scene/json_labels/mme_scene_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/landmark/json_labels/mme_landmark_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/artwork/json_labels/mme_artwork_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/OCR/json_labels/mme_OCR_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/commonsense_reasoning/json_labels/mme_commonsense_reasoning_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/numerical_calculation/json_labels/mme_numerical_calculation_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/text_translation/json_labels/mme_text_translation_ar.json
+    - /mnt/petrelfs/songmingyang/songmingyang/data/mm/annotation/MME/MME_Benchmark_release_version/code_reasoning/json_labels/mme_code_reasoning_ar.json
+  token: true
+dataset_path: json
+doc_to_target: label
+doc_to_text: text
+doc_to_visual: !function 'utils.mme_doc_to_visual'
+generation_kwargs:
+  do_sample: false
+  max_new_tokens: 16
+  num_beams: 1
+  temperature: 0
+  top_p: 0
+group: mme_mul
+metadata:
+- version: 0.0
+metric_list:
+- aggregation: !function 'utils.mme_aggregate_results'
+  higher_is_better: true
+  metric: mme_percetion_score
+- aggregation: !function 'utils.mme_aggregate_results'
+  higher_is_better: true
+  metric: mme_cognition_score
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_existence_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_count_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_position_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_color_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_posters_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_celebrity_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_scene_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_landmark_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_artwork_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_OCR_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_commonsense_reasoning_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_numerical_calculation_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_code_reasoning_acc
+- aggregation: !function 'utils.mme_category_acc'
+  higher_is_better: true
+  metric: mme_text_translation_acc
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_existence_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_count_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_position_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_color_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_posters_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_celebrity_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_scene_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_landmark_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_artwork_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_OCR_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_commonsense_reasoning_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_numerical_calculation_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_code_reasoning_acc_plus
+- aggregation: !function 'utils.mme_category_acc_plus'
+  higher_is_better: true
+  metric: mme_text_translation_acc_plus
+output_type: generate_until
+process_results: !function 'utils.mme_process_results'
+task: mme_mul_ar
+test_split: test

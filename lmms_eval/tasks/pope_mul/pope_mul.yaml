@@ -1,0 +1,37 @@
+group: pope_mul
+metadata:
+  version: 0.0
+task:
+- pope_mul_en
+- pope_mul_ar
+- pope_mul_bg
+- pope_mul_bn
+- pope_mul_de
+- pope_mul_el
+- pope_mul_es
+- pope_mul_fa
+- pope_mul_fr
+- pope_mul_gu
+- pope_mul_hi
+- pope_mul_id
+- pope_mul_it
+- pope_mul_ja
+- pope_mul_jv
+- pope_mul_ko
+- pope_mul_ml
+- pope_mul_mr
+- pope_mul_ms
+- pope_mul_my
+- pope_mul_nl
+- pope_mul_pt
+- pope_mul_ru
+- pope_mul_sv
+- pope_mul_sw
+- pope_mul_ta
+- pope_mul_te
+- pope_mul_th
+- pope_mul_tr
+- pope_mul_uk
+- pope_mul_ur
+- pope_mul_vi
+- pope_mul_zh

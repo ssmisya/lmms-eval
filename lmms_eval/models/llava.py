@@ -10,6 +10,7 @@ from lmms_eval.utils import stop_sequences_criteria
 
 from accelerate import Accelerator, DistributedType
 from accelerate.state import AcceleratorState
+from peft import PeftModel
 from typing import List, Optional, Union, Tuple
 import warnings
 
@@ -51,6 +52,7 @@ class Llava(lmms):
         conv_template="vicuna_v1",
         use_cache=True,
         truncate_context=False,  # whether to truncate the context in generation, set it False for LLaVA-1.6
+        peft_model_path=None,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -68,6 +70,9 @@ class Llava(lmms):
             self._image_processor,
             self._max_length,
         ) = load_pretrained_model(pretrained, None, get_model_name_from_path(pretrained), device_map=self._device)
+        if peft_model_path:
+            self._model = PeftModel.from_pretrained(self._model, peft_model_path, adapter_name="dpo")
+            eval_logger.info("Peft model loaded")
         self._config = self._model.config
         self.model.eval()
         self.model.tie_weights()
@@ -346,7 +351,7 @@ class Llava(lmms):
             # TODO: pay attention to this major generation step...
             try:
                 cont = self.model.generate(
-                    input_ids,
+                    inputs=input_ids,
                     attention_mask=attention_masks,
                     pad_token_id=pad_token_ids,
                     images=image_tensor,

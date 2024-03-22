@@ -1,0 +1,8 @@
+group: mme_mul
+metadata:
+  version: 0.0
+task:
+- mme_mul_en
+- mme_mul_ar
+- mme_mul_bg
+

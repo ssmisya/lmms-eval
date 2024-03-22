@@ -1,0 +1,37 @@
+group: pope_gqa_mul
+metadata:
+  version: 0.0
+task:
+- pope_gqa_mul_en
+- pope_gqa_mul_ar
+- pope_gqa_mul_bg
+- pope_gqa_mul_bn
+- pope_gqa_mul_de
+- pope_gqa_mul_el
+- pope_gqa_mul_es
+- pope_gqa_mul_fa
+- pope_gqa_mul_fr
+- pope_gqa_mul_gu
+- pope_gqa_mul_hi
+- pope_gqa_mul_id
+- pope_gqa_mul_it
+- pope_gqa_mul_ja
+- pope_gqa_mul_jv
+- pope_gqa_mul_ko
+- pope_gqa_mul_ml
+- pope_gqa_mul_mr
+- pope_gqa_mul_ms
+- pope_gqa_mul_my
+- pope_gqa_mul_nl
+- pope_gqa_mul_pt
+- pope_gqa_mul_ru
+- pope_gqa_mul_sv
+- pope_gqa_mul_sw
+- pope_gqa_mul_ta
+- pope_gqa_mul_te
+- pope_gqa_mul_th
+- pope_gqa_mul_tr
+- pope_gqa_mul_uk
+- pope_gqa_mul_ur
+- pope_gqa_mul_vi
+- pope_gqa_mul_zh

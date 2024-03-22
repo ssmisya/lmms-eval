@@ -1,0 +1,37 @@
+group: pope_aokvqa_mul
+metadata:
+  version: 0.0
+task:
+- pope_aokvqa_mul_en
+- pope_aokvqa_mul_ar
+- pope_aokvqa_mul_bg
+- pope_aokvqa_mul_bn
+- pope_aokvqa_mul_de
+- pope_aokvqa_mul_el
+- pope_aokvqa_mul_es
+- pope_aokvqa_mul_fa
+- pope_aokvqa_mul_fr
+- pope_aokvqa_mul_gu
+- pope_aokvqa_mul_hi
+- pope_aokvqa_mul_id
+- pope_aokvqa_mul_it
+- pope_aokvqa_mul_ja
+- pope_aokvqa_mul_jv
+- pope_aokvqa_mul_ko
+- pope_aokvqa_mul_ml
+- pope_aokvqa_mul_mr
+- pope_aokvqa_mul_ms
+- pope_aokvqa_mul_my
+- pope_aokvqa_mul_nl
+- pope_aokvqa_mul_pt
+- pope_aokvqa_mul_ru
+- pope_aokvqa_mul_sv
+- pope_aokvqa_mul_sw
+- pope_aokvqa_mul_ta
+- pope_aokvqa_mul_te
+- pope_aokvqa_mul_th
+- pope_aokvqa_mul_tr
+- pope_aokvqa_mul_uk
+- pope_aokvqa_mul_ur
+- pope_aokvqa_mul_vi
+- pope_aokvqa_mul_zh
