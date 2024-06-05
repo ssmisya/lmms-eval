@@ -6,12 +6,12 @@
 
 > Accelerating the development of large multimodal models (LMMs) with `lmms-eval`
 
-🏠 [Homepage](https://lmms-lab.github.io/) |  🎉 [Blog](https://lmms-lab.github.io/lmms-eval-blog/lmms-eval-0.1/) | 📚 [Documentation](docs/README.md) | 🤗 [Huggingface Datasets](https://huggingface.co/lmms-lab)
+🏠 [Homepage](https://lmms-lab.github.io/) |  🎉 [Blog](https://lmms-lab.github.io/lmms-eval-blog/lmms-eval-0.1/) | 📚 [Documentation](docs/README.md) | 🤗 [Huggingface Datasets](https://huggingface.co/lmms-lab) | <a href="https://emoji.gg/emoji/1684-discord-thread"><img src="https://cdn3.emoji.gg/emojis/1684-discord-thread.png" width="14px" height="14px" alt="Discord_Thread"></a> [discord/lmms-eval](https://discord.gg/zdkwKUqrPy)
 
-In an era where people pursue AGI (Artificial General Intelligence) with the zeal akin to 1960s moon landing mission. 
-Evaluating the core of AGI, the large language models (LLMs) and large multimodal models (LMMs) with unprecedented capabilities that can understand, learn, and interact across a broad range of human tasks, has become a pivotal challenge.
 
-To surmount this, a broad spectrum of evaluation datasets is proposed and used to assess model capabilities across various dimensions, creating a comprehensive capability chart that reveals the true performance of models. However, evaluation of models has become quite hard since there are countless evaluation benchmarks and datasets organized in various ways, scattered across the internet, sleeping in somebody's Google Drive, Dropbox, and other websites hosted by schools or research labs.
+In today's world, we're on an exciting journey toward creating Artificial General Intelligence (AGI), much like the enthusiasm of the 1960s moon landing. This journey is powered by advanced large language models (LLMs) and large multimodal models (LMMs), which are complex systems capable of understanding, learning, and performing a wide variety of human tasks. These advancements bring us closer to achieving AGI.
+
+To gauge how advanced these models are, we use a variety of evaluation benchmarks. These benchmarks are tools that help us understand the capabilities of these models, showing us how close we are to achieving AGI. However, finding and using these benchmarks is a big challenge. The necessary benchmarks and datasets are spread out and hidden in various places like Google Drive, Dropbox, and different school and research lab websites. It feels like we're on a treasure hunt, but the maps are scattered everywhere.
 
 In the field of language models, there has been a valuable precedent set by the work of [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). They offer integrated data and model interfaces, enabling rapid evaluation of language models and serving as the backend support framework for the [open-llm-leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard), and has gradually become the underlying ecosystem of the era of foundation models.
 
@@ -24,6 +24,10 @@ We humbly obsorbed the exquisite and efficient design of [lm-evaluation-harness]
 We believe our effort could provide an efficient interface for the detailed comparison of publicly available models to discern their strengths and weaknesses. It's also useful for research institutions and production-oriented companies to accelerate the development of large multimodal models. With the `lmms-eval`, we have significantly accelerated the lifecycle of model iteration. Inside the LLaVA team, the utilization of `lmms-eval` largely improves the efficiency of the model development cycle, as we are able to evaluate weekly trained hundreds of checkpoints on 20-30 datasets, identifying the strengths and weaknesses, and then make targeted improvements.
 
 # Annoucement
+
+## Contribution Guidance
+
+We've added guidance on contributing new datasets and models. Please refer to our [documentation](docs/README.md). If you need assistance, you can contact us via [discord/lmms-eval](https://discord.gg/ebAMGSsS).
 
 ## v0.1.0 Released
 
@@ -172,6 +176,13 @@ We also provide the raw data exported from Weights & Biases for the detailed res
   - Infographic VQA Test (info_vqa_test)
 - LLaVA-Bench (llava_in_the_wild)
 - LLaVA-Bench-COCO (llava_bench_coco)
+- MathVerse (mathverse)
+  - MathVerse Text Dominant (mathverse_testmini_text_dominant)
+  - MathVerse Text Only (mathverse_testmini_text_only)
+  - MathVerse Text Lite (mathverse_testmini_text_lite)
+  - MathVerse Vision Dominant (mathverse_testmini_vision_dominant)
+  - MathVerse Vision Intensive (mathverse_testmini_vision_intensive)
+  - MathVerse Vision Only (mathverse_testmini_vision_only)
 - MathVista (mathvista)
   - MathVista Validation (mathvista_testmini)
   - MathVista Test (mathvista_test)
@@ -186,6 +197,19 @@ We also provide the raw data exported from Weights & Biases for the detailed res
 - MMMU (mmmu)
   - MMMU Validation (mmmu_val)
   - MMMU Test (mmmu_test)
+- MMUPD (mmupd)
+  - MMUPD Base (mmupd_base)
+    - MMAAD Base (mmaad_base)
+    - MMIASD Base (mmiasd_base)
+    - MMIVQD Base (mmivqd_base)
+  - MMUPD Option (mmupd_option)
+    - MMAAD Option (mmaad_option)
+    - MMIASD Option (mmiasd_option)
+    - MMIVQD Option (mmivqd_option)
+  - MMUPD Instruction (mmupd_instruction)
+    - MMAAD Instruction (mmaad_instruction)
+    - MMIASD Instruction (mmiasd_instruction)
+    - MMIVQD Instruction (mmivqd_instruction)
 - MMVet (mmvet)
 - Multi-DocVQA (multidocvqa)
   - Multi-DocVQA Validation (multidocvqa_val)
@@ -197,14 +221,21 @@ We also provide the raw data exported from Weights & Biases for the detailed res
   - OKVQA Validation 2014 (ok_vqa_val2014)
 - POPE (pope)
 - RefCOCO (refcoco)
-    - refcoco_seg_test
-    - refcoco_seg_val
-    - refcoco_seg_testA
-    - refcoco_seg_testB
-    - refcoco_bbox_test
-    - refcoco_bbox_val
-    - refcoco_bbox_testA
-    - refcoco_bbox_testB
+    - refcoco_seg
+      - refcoco_seg_test
+      - refcoco_seg_val
+      - refcoco_seg_testA
+      - refcoco_seg_testB
+    - refcoco_bbox
+      - refcoco_bbox_test
+      - refcoco_bbox_val
+      - refcoco_bbox_testA
+      - refcoco_bbox_testB
+    - refcoco_bbox_rec
+      - refcoco_bbox_rec_test 
+      - refcoco_bbox_rec_val
+      - refcoco_bbox_rec_testA
+      - refcoco_bbox_rec_testB
 - RefCOCO+ (refcoco+)
     - refcoco+_seg
         - refcoco+_seg_val
@@ -214,14 +245,26 @@ We also provide the raw data exported from Weights & Biases for the detailed res
         - refcoco+_bbox_val
         - refcoco+_bbox_testA
         - refcoco+_bbox_testB
+    - refcoco+_bbox_rec
+        - refcoco+_bbox_rec_val
+        - refcoco+_bbox_rec_testA
+        - refcoco+_bbox_rec_testB
 - RefCOCOg (refcocog)
-    - refcocog_seg_test
-    - refcocog_seg_val
-    - refcocog_bbox_test
-    - refcocog_bbox_val
+    - refcocog_seg
+      - refcocog_seg_test
+      - refcocog_seg_val
+    - refcocog_bbox
+      - refcocog_bbox_test
+      - refcocog_bbox_val
+    - refcocog_bbox_rec
+      - refcocog_bbox_rec_test 
+      - refcocog_bbox_rec_val
 - ScienceQA (scienceqa_full)
   - ScienceQA Full (scienceqa)
   - ScienceQA IMG (scienceqa_img)
+- ScreenSpot (screenspot)
+  - ScreenSpot REC / Grounding (screenspot_rec)
+  - ScreenSpot REG / Instruction Generation (screenspot_reg)
 - SeedBench (seedbench)
 - SeedBench 2 (seedbench_2)
 - ST-VQA (stvqa)
@@ -237,6 +280,9 @@ We also provide the raw data exported from Weights & Biases for the detailed res
 - VQAv2 (vqav2)
   - VQAv2 Validation (vqav2_val)
   - VQAv2 Test (vqav2_test)
+- WebSRC (websrc)
+  - WebSRC Validation (websrc_val)
+  - WebSRC Test (websrc_test)
 
 ## Datasets to be added and tested
 - TallyQA (tallyqa)
@@ -269,7 +315,7 @@ We also thank:
 @misc{lmms_eval2024,
     title={LMMs-Eval: Accelerating the Development of Large Multimoal Models},
     url={https://github.com/EvolvingLMMs-Lab/lmms-eval},
-    author={Bo Li*, Peiyuan Zhang*, Kaicheng Zhang*, Fanyi Pu*, Xinrun Du, Yuhao Dong, Haotian Liu, Yuanhan Zhang, Ge Zhang, Chunyuan Li and Ziwei Liu},
+    author={Bo Li*, Peiyuan Zhang*, Kaichen Zhang*, Fanyi Pu*, Xinrun Du, Yuhao Dong, Haotian Liu, Yuanhan Zhang, Ge Zhang, Chunyuan Li and Ziwei Liu},
     publisher    = {Zenodo},
     version      = {v0.1.0},
     month={March},

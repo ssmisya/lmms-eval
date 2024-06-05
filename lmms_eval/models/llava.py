@@ -1,14 +1,19 @@
 import torch
+
+torch.backends.cuda.matmul.allow_tf32 = True
+
 import logging
 import copy
 from tqdm import tqdm
+from datetime import timedelta
+
 from lmms_eval import utils
 from lmms_eval.api.instance import Instance
 from lmms_eval.api.model import lmms
 from lmms_eval.api.registry import register_model
 from lmms_eval.utils import stop_sequences_criteria
 
-from accelerate import Accelerator, DistributedType
+from accelerate import Accelerator, DistributedType, InitProcessGroupKwargs
 from accelerate.state import AcceleratorState
 from peft import PeftModel
 from typing import List, Optional, Union, Tuple
@@ -30,11 +35,10 @@ try:
 except ImportError:
     eval_logger.error("LLaVA is not installed. Please install LLaVA to use this model.")
 
-from transformers.integrations.deepspeed import (
-    is_deepspeed_zero3_enabled,
-    set_hf_deepspeed_config,
-    unset_hf_deepspeed_config,
-)
+if torch.__version__ > "2.1.2":
+    best_fit_attn_implementation = "sdpa"
+else:
+    best_fit_attn_implementation = "eager"
 
 
 @register_model("llava")
@@ -52,20 +56,26 @@ class Llava(lmms):
         batch_size: Optional[Union[int, str]] = 1,
         trust_remote_code: Optional[bool] = False,
         revision=None,
-        use_flash_attention_2=False,
+        model_name=None,
+        attn_implementation=best_fit_attn_implementation,
+        use_flash_attention_2=True,
+        device_map="auto",
         conv_template="vicuna_v1",
         use_cache=True,
         truncate_context=False,  # whether to truncate the context in generation, set it False for LLaVA-1.6
         peft_model_path=None,
+        customized_config=None,
         **kwargs,
     ) -> None:
         super().__init__()
         # Do not use kwargs for now
         assert kwargs == {}, f"Unexpected kwargs: {kwargs}"
 
-        accelerator = Accelerator()
-        if accelerator.num_processes > 1:
+        accelerator_kwargs = InitProcessGroupKwargs(timeout=timedelta(weeks=52))
+        accelerator = Accelerator(kwargs_handlers=[accelerator_kwargs])
+        if accelerator.num_processes > 1 and device_map == "":
             self._device = torch.device(f"cuda:{accelerator.local_process_index}")
+            self.device_map = f"cuda:{accelerator.local_process_index}"
         else:
             self._device = device
         (
@@ -77,6 +87,28 @@ class Llava(lmms):
         if peft_model_path:
             self._model = PeftModel.from_pretrained(self._model, peft_model_path, adapter_name="dpo")
             eval_logger.info("Peft model loaded")
+            self._device = torch.device(device)
+            self.device_map = device_map
+
+        llava_model_args = {}
+        llava_model_args["attn_implementation"] = attn_implementation
+        if customized_config:
+            llava_model_args["customized_config"] = customized_config
+        if attn_implementation is not None:
+            llava_model_args["attn_implementation"] = attn_implementation
+        if "use_flash_attention_2" in kwargs:
+            llava_model_args["use_flash_attention_2"] = kwargs["use_flash_attention_2"]
+
+        model_name = model_name if model_name is not None else get_model_name_from_path(pretrained)
+        try:
+            # Try to load the model with the multimodal argument
+            self._tokenizer, self._model, self._image_processor, self._max_length = load_pretrained_model(pretrained, None, model_name, device_map=self.device_map, **llava_model_args)
+        except TypeError:
+            # for older versions of LLaVA that don't have multimodal and attn_implementation arguments
+            llava_model_args.pop("multimodal", None)
+            llava_model_args.pop("attn_implementation", None)
+            self._tokenizer, self._model, self._image_processor, self._max_length = load_pretrained_model(pretrained, None, model_name, device_map=self.device_map, **llava_model_args)
+
         self._config = self._model.config
         self.model.eval()
         self.model.tie_weights()
@@ -86,7 +118,7 @@ class Llava(lmms):
         self.use_cache = use_cache
         self.truncate_context = truncate_context
         # assert self.batch_size_per_gpu == 1, "Llava currently does not support batched generation. See https://github.com/haotian-liu/LLaVA/issues/754. HF Llava also has this issue."
-        if accelerator.num_processes > 1:
+        if accelerator.num_processes > 1 and device_map == "":
             assert accelerator.distributed_type in [DistributedType.FSDP, DistributedType.MULTI_GPU, DistributedType.DEEPSPEED], "Unsupported distributed type provided. Only DDP and FSDP are supported."
             # If you want to use DistributedType.DEEPSPEED, you have to run accelerate config before using the model
             # Also, you have to select zero stage 0 (equivalent to DDP) in order to make the prepare model works
@@ -98,6 +130,7 @@ class Llava(lmms):
                 }
                 AcceleratorState().deepspeed_plugin.deepspeed_config_process(must_match=True, **kwargs)
                 eval_logger.info("Detected that you are using DistributedType.DEEPSPEED. Make sure you run `accelerate config` and set zero stage to 0")
+
             if accelerator.distributed_type == DistributedType.FSDP or accelerator.distributed_type == DistributedType.DEEPSPEED:
                 self._model = accelerator.prepare(self.model)
             else:
@@ -107,10 +140,15 @@ class Llava(lmms):
                 eval_logger.info(f"Using {accelerator.num_processes} devices with data parallelism")
             self._rank = self.accelerator.local_process_index
             self._world_size = self.accelerator.num_processes
-        else:
-            self.model.to(self._device)
+        elif accelerator.num_processes == 1 and device_map == "auto":
+            eval_logger.info(f"Using {accelerator.num_processes} devices with tensor parallelism")
             self._rank = 0
             self._word_size = 1
+        else:
+            eval_logger.info(f"Using single device: {self._device}")
+            self.model.to(self._device)
+            self._rank = 0
+            self._world_size = 1
 
     @property
     def config(self):
@@ -196,7 +234,7 @@ class Llava(lmms):
             else:
                 image = None
 
-            prompts_input = contexts[0]
+            prompts_input = contexts[0] if isinstance(contexts, list) else contexts
 
             if image is not None and len(image) != 0 and DEFAULT_IMAGE_TOKEN not in prompts_input:
                 """
@@ -207,9 +245,13 @@ class Llava(lmms):
                 """
                 image_tokens = [DEFAULT_IMAGE_TOKEN] * len(visuals)
                 image_tokens = " ".join(image_tokens)
-                prompts_input = image_tokens + "\n" + contexts[0]
+                prompts_input = image_tokens + "\n" + (contexts[0] if isinstance(contexts, list) else contexts)
 
-            conv = conv_templates[self.conv_template].copy()
+            # This is much safer for llama3, as we now have some object type in it
+            if "llama_3" in self.conv_template:
+                conv = copy.deepcopy(conv_templates[self.conv_template])
+            else:
+                conv = conv_templates[self.conv_template].copy()
             conv.append_message(conv.roles[0], prompts_input)
             conv.append_message(conv.roles[1], None)
             prompt = conv.get_prompt()
@@ -317,7 +359,11 @@ class Llava(lmms):
                 else:
                     question = context
 
-                conv = conv_templates[self.conv_template].copy()
+                # This is much safer for llama3, as we now have some object type in it
+                if "llama_3" in self.conv_template:
+                    conv = copy.deepcopy(conv_templates[self.conv_template])
+                else:
+                    conv = conv_templates[self.conv_template].copy()
                 conv.append_message(conv.roles[0], question)
                 conv.append_message(conv.roles[1], None)
                 prompt_question = conv.get_prompt()

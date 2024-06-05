@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lmms_eval"
-version = "0.1.0"
+version = "0.1.2"
 authors = [
     { name = "LMMMs-Lab Evaluation Team", email = "lmms_eval@outlook.com" },
 ]
@@ -38,7 +38,7 @@ dependencies = [
     "openai>=1.0.0",
     "pycocoevalcap",
     "tqdm-multiprocess",
-    "transformers>=4.31.0",
+    "transformers",
     "zstandard",
     "pillow",
     "pyyaml",
