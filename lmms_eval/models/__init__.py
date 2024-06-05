@@ -8,13 +8,14 @@ AVAILABLE_MODELS = {
     "instructblip": "InstructBLIP",
     "minicpm_v": "MiniCPM_V",
     "mblip":"mBLIP",
+    "llava_vcd": "Llava_vcd",
 }
 
 for model_name, model_class in AVAILABLE_MODELS.items():
     try:
         exec(f"from .{model_name} import {model_class}")
-    except ImportError:
-        pass
+    except ImportError as e:
+        print(f"Failed to import {model_class}: {e}")
 
 
 import hf_transfer

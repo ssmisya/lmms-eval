@@ -75,7 +75,7 @@ def include_task_folder(task_dir: str, register_task: bool = True) -> None:
                 yaml_path = os.path.join(root, f)
                 try:
                     config = utils.load_yaml_config(yaml_path)
-                    # eval_logger.debug(f"Loading config from {yaml_path}")
+                    eval_logger.debug(f"Loading config from {yaml_path}")
                     if "task" not in config:
                         continue
 

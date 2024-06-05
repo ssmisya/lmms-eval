@@ -1,7 +1,7 @@
 # Add the following functions to your existing utils.py file
 import os
 from PIL import Image
-from m3apo.vcd.experiments.eval.language_dict import language_dict
+from mhr.vcd.experiments.eval.language_dict import language_dict
 
 def compare_str_list(str1,str2):
     if isinstance(str1,list):

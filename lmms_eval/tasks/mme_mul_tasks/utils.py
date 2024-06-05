@@ -4,7 +4,7 @@ import datetime
 import json
 from lmms_eval.tasks._task_utils.file_utils import generate_submission_file
 from PIL import Image
-from m3apo.vcd.experiments.eval.language_dict import language_dict
+from mhr.vcd.experiments.eval.language_dict import language_dict
 
 import logging
 
@@ -48,6 +48,10 @@ def compare_str_list(str1,str2):
     else:
         raise ValueError("str1 should be list or str")
 
+def compare_str_list_strict(str1,str2):
+    assert isinstance(str1,str) and isinstance(str2,str)
+    return str1.strip() == str2.strip()
+
 
 def mme_doc_to_visual(doc):
     if os.path.isabs(doc["image"]):
@@ -73,7 +77,11 @@ def mme_process_results(doc, results):
     gt_ans = doc["label"].lower().strip().replace(".", "")
     language = doc["language"].strip()
     assert gt_ans in ["yes", "no"]
-    score = 1.0 if compare_str_list(language_dict[language][gt_ans],pred_ans) else 0.0
+    if compare_str_list(language_dict[language]['yes'],pred_ans) and compare_str_list(language_dict[language]['no'],pred_ans):
+        score = 0.0
+    else:
+        score = 1.0 if compare_str_list(language_dict[language][gt_ans],pred_ans) else 0.0
+    
     category = doc["category"]
     key_name = "mme_percetion_score" if category in eval_type_dict["Perception"] else "mme_cognition_score"
     category_acc = f"mme_{category}_acc"

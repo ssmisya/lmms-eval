@@ -48,12 +48,13 @@ def pope_process_results(doc, results):
         score = 0.0
     else:
         score = 1.0 if compare_str_list(language_dict[language][gt_ans],pred) else 0.0
+    style=doc["type"]
     return {
-        "pope_accuracy": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
-        "pope_precision": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
-        "pope_recall": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
-        "pope_f1_score": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
-        "pope_yes_ratio": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
+        f"pope_{style}_accuracy": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
+        f"pope_{style}_precision": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
+        f"pope_{style}_recall": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
+        f"pope_{style}_f1_score": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
+        f"pope_{style}_yes_ratio": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans, "language": language},
     }
 
 

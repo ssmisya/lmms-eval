@@ -19,16 +19,15 @@ warnings.filterwarnings("ignore")
 eval_logger = logging.getLogger("lmms-eval")
 
 try:
-    # from mhr.alignment.models.llava_v1_5.llava.model.builder import load_pretrained_model
-    # from mhr.alignment.models.llava_v1_5.llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
-    # from mhr.alignment.models.llava_v1_5.llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
-    # from mhr.alignment.models.llava_v1_5.llava.conversation import conv_templates, SeparatorStyle
-    from llava.model.builder import load_pretrained_model
-    from llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
-    from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
-    from llava.conversation import conv_templates, SeparatorStyle
-except ImportError:
-    eval_logger.error("LLaVA is not installed. Please install LLaVA to use this model.")
+    from mhr.vcd.experiments.llava.model.builder import load_pretrained_model
+    from mhr.vcd.experiments.llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
+    from mhr.vcd.experiments.llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
+    from mhr.vcd.experiments.llava.conversation import conv_templates, SeparatorStyle
+    from mhr.vcd.vcd_utils.vcd_add_noise import add_diffusion_noise
+    from mhr.vcd.vcd_utils.vcd_sample import evolve_vcd_sampling
+    evolve_vcd_sampling()
+except Exception:
+        eval_logger.error("LLaVA VCD Model is not installed. ")
 
 from transformers.integrations.deepspeed import (
     is_deepspeed_zero3_enabled,
@@ -37,8 +36,8 @@ from transformers.integrations.deepspeed import (
 )
 
 
-@register_model("llava")
-class Llava(lmms):
+@register_model("llava_vcd")
+class Llava_vcd(lmms):
     """
     Llava Model
     """
@@ -57,6 +56,14 @@ class Llava(lmms):
         use_cache=True,
         truncate_context=False,  # whether to truncate the context in generation, set it False for LLaVA-1.6
         peft_model_path=None,
+        use_cd=True,
+        noise_step=500,
+        cd_alpha = 1,
+        cd_beta = 0.1,
+        do_sample=True,
+        top_p=1,
+        top_k=None,
+        max_new_tokens=1024,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -77,6 +84,13 @@ class Llava(lmms):
         if peft_model_path:
             self._model = PeftModel.from_pretrained(self._model, peft_model_path, adapter_name="dpo")
             eval_logger.info("Peft model loaded")
+        self.use_cd = use_cd
+        self.cd_alpha = cd_alpha
+        self.cd_beta = cd_beta
+        self.do_sample = do_sample
+        self.noise_step = noise_step   
+        # self.top_p = top_p
+        # self.top_k = top_k
         self._config = self._model.config
         self.model.eval()
         self.model.tie_weights()
@@ -351,29 +365,68 @@ class Llava(lmms):
             pad_token_ids = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else self.tokenizer.eos_token_id
             input_ids = self.pad_sequence(input_ids_list, batch_first=True, padding_value=pad_token_ids).to(self.device)
             attention_masks = input_ids.ne(pad_token_ids).to(self.device)
+            if self.use_cd:
+                image_tensor_cd = add_diffusion_noise(image_tensor, self.noise_step)
+            else:
+                image_tensor_cd = None  
             # These steps are not in LLaVA's original code, but are necessary for generation to work
             # TODO: pay attention to this major generation step...
-            try:
-                cont = self.model.generate(
+            cont = self.model.generate(
                     inputs=input_ids,
                     attention_mask=attention_masks,
                     pad_token_id=pad_token_ids,
                     images=image_tensor,
-                    image_sizes=gen_kwargs["image_sizes"],
-                    do_sample=True if gen_kwargs["temperature"] > 0 else False,
+                    images_cd=(image_tensor_cd if image_tensor_cd is not None else None),
+                    cd_alpha = self.cd_alpha,
+                    cd_beta = self.cd_beta,     
+                    do_sample=True,
                     temperature=gen_kwargs["temperature"],
                     top_p=gen_kwargs["top_p"],
-                    num_beams=gen_kwargs["num_beams"],
                     max_new_tokens=gen_kwargs["max_new_tokens"],
                     use_cache=self.use_cache,
                 )
-                # from mhr.utils.debugging import remote_breakpoint
-                # remote_breakpoint()
-                text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
-            except Exception as e:
-                eval_logger.error(f"Error {e} in generating")
-                cont = ""
-                text_outputs = [""]
+            cont_after_filter=[]
+            for idx,input_ids_item in enumerate(input_ids):
+                input_token_len = input_ids_item.shape[0]
+                n_diff_input_output = (input_ids_item != cont[idx][:input_token_len]).sum().item()
+                if n_diff_input_output > 0:
+                    print(f'[Warning] {n_diff_input_output} output_ids are not the same as the input_ids')
+                cont_after_filter.append(cont[idx][input_token_len:])
+            cont = cont_after_filter
+            text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
+            # try:
+            #     cont = self.model.generate(
+            #         inputs=input_ids,
+            #         attention_mask=attention_masks,
+            #         pad_token_id=pad_token_ids,
+            #         images=image_tensor,
+            #         images_cd=(image_tensor_cd if image_tensor_cd is not None else None),
+            #         cd_alpha = self.cd_alpha,
+            #         cd_beta = self.cd_beta,     
+            #         do_sample=True,
+            #         temperature=gen_kwargs["temperature"],
+            #         top_p=gen_kwargs["top_p"],
+            #         max_new_tokens=gen_kwargs["max_new_tokens"],
+            #         use_cache=self.use_cache,
+            #     )
+            #     # cont = self.model.generate(
+            #     #     inputs=input_ids,
+            #     #     attention_mask=attention_masks,
+            #     #     pad_token_id=pad_token_ids,
+            #     #     images=image_tensor,
+            #     #     image_sizes=gen_kwargs["image_sizes"],
+            #     #     do_sample=True if gen_kwargs["temperature"] > 0 else False,
+            #     #     temperature=gen_kwargs["temperature"],
+            #     #     top_p=gen_kwargs["top_p"],
+            #     #     num_beams=gen_kwargs["num_beams"],
+            #     #     max_new_tokens=gen_kwargs["max_new_tokens"],
+            #     #     use_cache=self.use_cache,
+            #     # )
+            #     text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
+            # except Exception as e:
+            #     eval_logger.error(f"Error {e} in generating")
+            #     cont = ""
+            #     text_outputs = [""]
 
             # cont_toks_list = cont.tolist()
             # for cont_toks, context in zip(cont_toks_list, contexts):

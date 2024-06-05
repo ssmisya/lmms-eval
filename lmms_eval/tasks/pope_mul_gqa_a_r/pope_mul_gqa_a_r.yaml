@@ -1,0 +1,37 @@
+group: pope_mul_gqa_a_r
+metadata:
+  version: 0.0
+task:
+- pope_mul_gqa_a_r_en
+- pope_mul_gqa_a_r_ar
+- pope_mul_gqa_a_r_bg
+- pope_mul_gqa_a_r_bn
+- pope_mul_gqa_a_r_de
+- pope_mul_gqa_a_r_el
+- pope_mul_gqa_a_r_es
+- pope_mul_gqa_a_r_fa
+- pope_mul_gqa_a_r_fr
+- pope_mul_gqa_a_r_gu
+- pope_mul_gqa_a_r_hi
+- pope_mul_gqa_a_r_id
+- pope_mul_gqa_a_r_it
+- pope_mul_gqa_a_r_ja
+- pope_mul_gqa_a_r_jv
+- pope_mul_gqa_a_r_ko
+- pope_mul_gqa_a_r_ml
+- pope_mul_gqa_a_r_mr
+- pope_mul_gqa_a_r_ms
+- pope_mul_gqa_a_r_my
+- pope_mul_gqa_a_r_nl
+- pope_mul_gqa_a_r_pt
+- pope_mul_gqa_a_r_ru
+- pope_mul_gqa_a_r_sv
+- pope_mul_gqa_a_r_sw
+- pope_mul_gqa_a_r_ta
+- pope_mul_gqa_a_r_te
+- pope_mul_gqa_a_r_th
+- pope_mul_gqa_a_r_tr
+- pope_mul_gqa_a_r_uk
+- pope_mul_gqa_a_r_ur
+- pope_mul_gqa_a_r_vi
+- pope_mul_gqa_a_r_zh
