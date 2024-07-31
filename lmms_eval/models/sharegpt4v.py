@@ -24,14 +24,22 @@ warnings.filterwarnings("ignore")
 eval_logger = logging.getLogger("lmms-eval")
 
 try:
+    from share4v.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
+    from share4v.conversation import conv_templates, SeparatorStyle
+    from share4v.model.builder import load_pretrained_model
+    from share4v.utils import disable_torch_init
+    from share4v.mm_utils import tokenizer_image_token, get_model_name_from_path, KeywordsStoppingCriteria
+    from llava.mm_utils import process_images
+
     # from mhr.alignment.models.llava_v1_5.llava.model.builder import load_pretrained_model
     # from mhr.alignment.models.llava_v1_5.llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
     # from mhr.alignment.models.llava_v1_5.llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
     # from mhr.alignment.models.llava_v1_5.llava.conversation import conv_templates, SeparatorStyle
-    from llava.model.builder import load_pretrained_model
-    from llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
-    from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
-    from llava.conversation import conv_templates, SeparatorStyle
+    
+    # from llava.model.builder import load_pretrained_model
+    # from llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
+    # from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
+    # from llava.conversation import conv_templates, SeparatorStyle
 except ImportError:
     eval_logger.error("LLaVA is not installed. Please install LLaVA to use this model.")
 
@@ -41,8 +49,8 @@ else:
     best_fit_attn_implementation = "eager"
 
 
-@register_model("llava")
-class Llava(lmms):
+@register_model("sharegpt4v")
+class ShareGPT4V(lmms):
     """
     Llava Model
     """
@@ -375,7 +383,7 @@ class Llava(lmms):
 
             # input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt").unsqueeze(0).to(self.device)
             # preconfigure gen_kwargs with defaults
-            gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
+            # gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
             if "max_new_tokens" not in gen_kwargs:
                 gen_kwargs["max_new_tokens"] = 1024
             if "temperature" not in gen_kwargs:
@@ -393,21 +401,24 @@ class Llava(lmms):
             # TODO: pay attention to this major generation step...
             try:
                 cont = self.model.generate(
-                    inputs=input_ids,
-                    attention_mask=attention_masks,
-                    pad_token_id=pad_token_ids,
-                    images=image_tensor,
-                    image_sizes=gen_kwargs["image_sizes"],
-                    do_sample=True if gen_kwargs["temperature"] > 0 else False,
-                    temperature=gen_kwargs["temperature"],
-                    top_p=gen_kwargs["top_p"],
-                    num_beams=gen_kwargs["num_beams"],
-                    max_new_tokens=gen_kwargs["max_new_tokens"],
-                    use_cache=self.use_cache,
-                )
-                # from mhr.utils.debugging import remote_breakpoint
-                # remote_breakpoint()
-                text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
+                        inputs=input_ids,
+                        attention_mask=attention_masks,
+                        pad_token_id=pad_token_ids,
+                        images=image_tensor,
+                        do_sample=True if gen_kwargs["temperature"] > 0 else False,
+                        temperature=gen_kwargs["temperature"],
+                        top_p=gen_kwargs["top_p"],
+                        num_beams=gen_kwargs["num_beams"],
+                        max_new_tokens=gen_kwargs["max_new_tokens"],
+                        use_cache=self.use_cache,
+                    )
+                    # from mhr.utils.debugging import remote_breakpoint
+                    # remote_breakpoint()
+                # text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
+                assert input_ids.shape[0] == 1, "Batch size should be 1"
+                input_token_len = input_ids.shape[1]
+                text_outputs = self.tokenizer.batch_decode(cont[:, input_token_len:], skip_special_tokens=True)
+            # print(text_outputs)
             except Exception as e:
                 eval_logger.error(f"Error {e} in generating")
                 cont = ""

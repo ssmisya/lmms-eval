@@ -15,25 +15,22 @@ from lmms_eval.utils import stop_sequences_criteria
 
 from accelerate import Accelerator, DistributedType, InitProcessGroupKwargs
 from accelerate.state import AcceleratorState
+from transformers import AutoTokenizer
 from peft import PeftModel
 from typing import List, Optional, Union, Tuple
 import warnings
+import sys
 
 warnings.filterwarnings("ignore")
 
 eval_logger = logging.getLogger("lmms-eval")
 
 try:
-    # from mhr.alignment.models.llava_v1_5.llava.model.builder import load_pretrained_model
-    # from mhr.alignment.models.llava_v1_5.llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
-    # from mhr.alignment.models.llava_v1_5.llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
-    # from mhr.alignment.models.llava_v1_5.llava.conversation import conv_templates, SeparatorStyle
-    from llava.model.builder import load_pretrained_model
-    from llava.mm_utils import get_model_name_from_path, process_images, tokenizer_image_token
-    from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN, IGNORE_INDEX
-    from llava.conversation import conv_templates, SeparatorStyle
+    sys.path.append('/mnt/petrelfs/songmingyang/code/mm/models/mPLUG-Owl/mPLUG-Owl')
+    from mplug_owl.modeling_mplug_owl import MplugOwlForConditionalGeneration
+    from mplug_owl.processing_mplug_owl import MplugOwlImageProcessor, MplugOwlProcessor
 except ImportError:
-    eval_logger.error("LLaVA is not installed. Please install LLaVA to use this model.")
+    eval_logger.error("mPLUG-Owl is not installed. Please install mPLUG-Owl to use this model.")
 
 if torch.__version__ > "2.1.2":
     best_fit_attn_implementation = "sdpa"
@@ -41,30 +38,22 @@ else:
     best_fit_attn_implementation = "eager"
 
 
-@register_model("llava")
-class Llava(lmms):
+@register_model("mplug_owl")
+class mPLUG_Owl(lmms):
     """
     Llava Model
     """
 
     def __init__(
         self,
-        pretrained: str = "liuhaotian/llava-v1.5-7b",
+        pretrained: str = 'MAGAer13/mplug-owl-llama-7b',
         truncation: Optional[bool] = True,
         device: Optional[str] = "cuda",
         dtype: Optional[Union[str, torch.dtype]] = "auto",
         batch_size: Optional[Union[int, str]] = 1,
-        trust_remote_code: Optional[bool] = False,
-        revision=None,
-        model_name=None,
-        attn_implementation=best_fit_attn_implementation,
-        use_flash_attention_2=True,
         device_map="",
-        conv_template="vicuna_v1",
         use_cache=True,
         truncate_context=False,  # whether to truncate the context in generation, set it False for LLaVA-1.6
-        customized_config=None,
-        peft_model_path=None,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -79,37 +68,27 @@ class Llava(lmms):
         else:
             self._device = torch.device(device)
             self.device_map = device_map
-
-        llava_model_args = {}
-        llava_model_args["attn_implementation"] = attn_implementation
-        if customized_config:
-            llava_model_args["customized_config"] = customized_config
-        if attn_implementation is not None:
-            llava_model_args["attn_implementation"] = attn_implementation
-        if "use_flash_attention_2" in kwargs:
-            llava_model_args["use_flash_attention_2"] = kwargs["use_flash_attention_2"]
-
-        model_name = model_name if model_name is not None else get_model_name_from_path(pretrained)
-        try:
-            # Try to load the model with the multimodal argument
-            self._tokenizer, self._model, self._image_processor, self._max_length = load_pretrained_model(pretrained, None, model_name, device_map=self.device_map, **llava_model_args)
-        except TypeError:
-            # for older versions of LLaVA that don't have multimodal and attn_implementation arguments
-            llava_model_args.pop("multimodal", None)
-            llava_model_args.pop("attn_implementation", None)
-            self._tokenizer, self._model, self._image_processor, self._max_length = load_pretrained_model(pretrained, None, model_name, device_map=self.device_map, **llava_model_args)
-        if peft_model_path:
-            self._model = PeftModel.from_pretrained(self._model, peft_model_path, adapter_name="dpo")
-            eval_logger.info("Peft model loaded")
-        self._config = self._model.config
+        
+        self._model = MplugOwlForConditionalGeneration.from_pretrained(
+            pretrained,
+            torch_dtype=torch.bfloat16,
+        )
+        self._image_processor = MplugOwlImageProcessor.from_pretrained(pretrained)
+        self._tokenizer = AutoTokenizer.from_pretrained(pretrained)
+        self._processor = MplugOwlProcessor(self._image_processor, self._tokenizer)
+        self.prompt_template = '''The following is a conversation between a curious human and AI assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
+                    {image_tokens}
+                    Human: {question}
+                    AI: '''
+        self.DEFAULT_IMAGE_TOKEN = "<image>"
         self.model.eval()
+        self._config = self._model.config
         self.model.tie_weights()
         self.truncation = truncation
         self.batch_size_per_gpu = int(batch_size)
-        self.conv_template = conv_template
         self.use_cache = use_cache
         self.truncate_context = truncate_context
-        # assert self.batch_size_per_gpu == 1, "Llava currently does not support batched generation. See https://github.com/haotian-liu/LLaVA/issues/754. HF Llava also has this issue."
+        
         if accelerator.num_processes > 1 and device_map == "":
             assert accelerator.distributed_type in [DistributedType.FSDP, DistributedType.MULTI_GPU, DistributedType.DEEPSPEED], "Unsupported distributed type provided. Only DDP and FSDP are supported."
             # If you want to use DistributedType.DEEPSPEED, you have to run accelerate config before using the model
@@ -141,6 +120,9 @@ class Llava(lmms):
             self.model.to(self._device)
             self._rank = 0
             self._world_size = 1
+        
+        
+        
 
     @property
     def config(self):
@@ -158,6 +140,13 @@ class Llava(lmms):
             return self.accelerator.unwrap_model(self._model)
         else:
             return self._model
+    @property
+    def processor(self):
+        return self._processor
+    
+    @property
+    def image_processor(self):
+        return self._image_processor
 
     @property
     def eot_token_id(self):
@@ -206,70 +195,7 @@ class Llava(lmms):
 
     def loglikelihood(self, requests: List[Instance]) -> List[Tuple[float, bool]]:
         # TODO
-        res = []
-        pbar = tqdm(total=len(requests), disable=(self.rank != 0), desc="Model Responding")
-
-        for contexts, doc_to_target, doc_to_visual, doc_id, task, split in [reg.args for reg in requests]:
-            # encode, pad, and truncate contexts for this batch
-            if type(doc_to_target) == str:
-                continuation = doc_to_target
-            else:
-                continuation = doc_to_target(self.task_dict[task][split][doc_id])
-            visuals = [doc_to_visual(self.task_dict[task][split][doc_id])]
-            visuals = self.flatten(visuals)
-            if visuals:
-                image = process_images(visuals, self._image_processor, self._config)
-                if type(image) is list:
-                    image = [_image.to(dtype=torch.float16, device=self.device) for _image in image]
-                else:
-                    image = image.to(dtype=torch.float16, device=self.device)
-            else:
-                image = None
-
-            prompts_input = contexts[0] if isinstance(contexts, list) else contexts
-
-            if image is not None and len(image) != 0 and DEFAULT_IMAGE_TOKEN not in prompts_input:
-                """
-                Three senarios:
-                1. No image, and there for, no image token should be added.
-                2. image token is already specified in the context, so we don't need to add it.
-                3. image token is not specified in the context and there is image inputs, so we need to add it. In this case, we add the image token at the beginning of the context and add a new line.
-                """
-                image_tokens = [DEFAULT_IMAGE_TOKEN] * len(visuals)
-                image_tokens = " ".join(image_tokens)
-                prompts_input = image_tokens + "\n" + (contexts[0] if isinstance(contexts, list) else contexts)
-
-            # This is much safer for llama3, as we now have some object type in it
-            if "llama_3" in self.conv_template:
-                conv = copy.deepcopy(conv_templates[self.conv_template])
-            else:
-                conv = conv_templates[self.conv_template].copy()
-            conv.append_message(conv.roles[0], prompts_input)
-            conv.append_message(conv.roles[1], None)
-            prompt = conv.get_prompt()
-            pad_token_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else self.tokenizer.eos_token_id
-            contxt_id = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt").unsqueeze(0).to(self.device)
-            # Add the answer of the second role
-            conv.messages[1][1] = continuation
-
-            prompt = conv.get_prompt()
-            input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt").unsqueeze(0).to(self.device)
-            labels = input_ids.clone()
-            # Context part no need to calculate for loss
-            labels[0, : contxt_id.shape[1]] = -100
-            with torch.inference_mode():
-                outputs = self.model(input_ids=input_ids, labels=labels, images=image, use_cache=True)
-            loss = outputs["loss"]
-            # loss = torch.exp(loss)
-            logits = outputs["logits"]
-            greedy_tokens = logits.argmax(dim=-1)
-            cont_toks = input_ids[:, contxt_id.shape[1] :]  # [1, seq]
-            greedy_tokens = greedy_tokens[:, contxt_id.shape[1] : input_ids.shape[1]]  # [1, seq]
-            max_equal = (greedy_tokens == cont_toks).all()
-            res.append((float(loss.item()), bool(max_equal)))
-            pbar.update(1)
-        pbar.close()
-        return res
+        pass
 
     def flatten(self, input):
         new_list = []
@@ -325,7 +251,9 @@ class Llava(lmms):
                 eval_logger.info(f"Setting image aspect ratio: {self._config.image_aspect_ratio}")
             # encode, pad, and truncate contexts for this batch
             if visuals:
-                image_tensor = process_images(visuals, self._image_processor, self._config)
+                image_tensor = self.image_processor.preprocess(visuals,return_tensors="pt")["pixel_values"]
+                
+                # image_tensor = process_images(visuals, self._image_processor, self._config)
                 if type(image_tensor) is list:
                     image_tensor = [_image.to(dtype=torch.float16, device=self.device) for _image in image_tensor]
                 else:
@@ -333,33 +261,27 @@ class Llava(lmms):
             else:
                 image_tensor = None
 
-            # prompts_input = contexts[0]
+
 
             question_input = []
 
             for visual, context in zip(visuals, contexts):
-                if image_tensor is not None and len(image_tensor) != 0 and DEFAULT_IMAGE_TOKEN not in context:
+                if image_tensor is not None and len(image_tensor) != 0 and self.DEFAULT_IMAGE_TOKEN not in context:
                     """
                     Three senarios:
                     1. No image, and there for, no image token should be added.
                     2. image token is already specified in the context, so we don't need to add it.
                     3. image token is not specified in the context and there is image inputs, so we need to add it. In this case, we add the image token at the beginning of the context and add a new line.
                     """
-                    image_tokens = [DEFAULT_IMAGE_TOKEN] * len(visual) if isinstance(visual, list) else [DEFAULT_IMAGE_TOKEN]
-                    image_tokens = " ".join(image_tokens)
-                    question = image_tokens + "\n" + context
-                else:
+                    image_tokens = [self.DEFAULT_IMAGE_TOKEN] * len(visual) if isinstance(visual, list) else [self.DEFAULT_IMAGE_TOKEN]
+                    image_tokens = "Human: "+" ".join(image_tokens)
                     question = context
-
-                # This is much safer for llama3, as we now have some object type in it
-                if "llama_3" in self.conv_template:
-                    conv = copy.deepcopy(conv_templates[self.conv_template])
                 else:
-                    conv = conv_templates[self.conv_template].copy()
-                conv.append_message(conv.roles[0], question)
-                conv.append_message(conv.roles[1], None)
-                prompt_question = conv.get_prompt()
-                question_input.append(prompt_question)
+                    image_tokens = ""
+                    question = context
+                prompt = self.prompt_template.format(question=question,image_tokens=image_tokens)
+                question_input.append(prompt)
+                
 
             # The above for loop has bugs. When there is no visuals, e.g. pure text,
             # there will be no for loop execute resulting in an empty question_input (because no visuals)
@@ -367,15 +289,13 @@ class Llava(lmms):
             if len(visuals) == 0:
                 for context in contexts:
                     question = context
-                    conv = conv_templates[self.conv_template].copy()
-                    conv.append_message(conv.roles[0], question)
-                    conv.append_message(conv.roles[1], None)
-                    prompt_question = conv.get_prompt()
-                    question_input.append(prompt_question)
+                    image_tokens = ""
+                    prompts = self.prompt_template.format(question=question)
+                    question_input.append(prompts)
 
             # input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt").unsqueeze(0).to(self.device)
             # preconfigure gen_kwargs with defaults
-            gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
+            # gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
             if "max_new_tokens" not in gen_kwargs:
                 gen_kwargs["max_new_tokens"] = 1024
             if "temperature" not in gen_kwargs:
@@ -385,46 +305,33 @@ class Llava(lmms):
             if "num_beams" not in gen_kwargs:
                 gen_kwargs["num_beams"] = 1
 
-            input_ids_list = [tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt") for prompt in question_input]
-            pad_token_ids = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else self.tokenizer.eos_token_id
-            input_ids = self.pad_sequence(input_ids_list, batch_first=True, padding_value=pad_token_ids).to(self.device)
-            attention_masks = input_ids.ne(pad_token_ids).to(self.device)
+            # input_ids_list = [tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt") for prompt in question_input]
+            tokenized = self.tokenizer(question_input, return_tensors="pt", padding=True, return_token_type_ids=False,)
+            input_ids = tokenized["input_ids"].to(self.device)
+            attention_masks = tokenized["attention_mask"].to(self.device)
+            # pad_token_ids = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else self.tokenizer.eos_token_id
+            # input_ids = self.pad_sequence(input_ids_list, batch_first=True, padding_value=pad_token_ids).to(self.device)
+            # attention_masks = input_ids.ne(pad_token_ids).to(self.device)
             # These steps are not in LLaVA's original code, but are necessary for generation to work
             # TODO: pay attention to this major generation step...
             try:
                 cont = self.model.generate(
-                    inputs=input_ids,
+                    input_ids=input_ids,
+                    pixel_values=image_tensor,
                     attention_mask=attention_masks,
-                    pad_token_id=pad_token_ids,
-                    images=image_tensor,
-                    image_sizes=gen_kwargs["image_sizes"],
+
                     do_sample=True if gen_kwargs["temperature"] > 0 else False,
                     temperature=gen_kwargs["temperature"],
                     top_p=gen_kwargs["top_p"],
                     num_beams=gen_kwargs["num_beams"],
                     max_new_tokens=gen_kwargs["max_new_tokens"],
-                    use_cache=self.use_cache,
                 )
-                # from mhr.utils.debugging import remote_breakpoint
-                # remote_breakpoint()
                 text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)
             except Exception as e:
                 eval_logger.error(f"Error {e} in generating")
                 cont = ""
                 text_outputs = [""]
-
-            # cont_toks_list = cont.tolist()
-            # for cont_toks, context in zip(cont_toks_list, contexts):
-            # discard context + left-padding toks if using causal decoder-only LMM
-            # if self.truncate_context:
-            #     cont_toks = cont_toks[input_ids.shape[1] :]
-            # use secondary stop seqs to cut off should-have-been-stopped content post-hoc
-            # if self.truncate_context:
-            #     for term in until:
-            #         if len(term) > 0:
-            #             # ignore '' separator,
-            #             # for seq2seq case where self.tok_decode(self.eot_token_id) = ''
-            #             text_outputs = text_outputs.split(term)[0]
+            # print(text_outputs)
             res.extend(text_outputs)
             self.cache_hook.add_partial("generate_until", (context, gen_kwargs), text_outputs)
             pbar.update(1)

@@ -47,3 +47,9 @@ model_specific_prompt_kwargs:
   gpt4V :
     img_token : <image>
     post_prompt : "Answer with the option's letter from the given choices directly."
+  sharegpt4v :
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."
+  mplug_owl :
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."

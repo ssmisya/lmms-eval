@@ -38,11 +38,13 @@ def pope_aggregate_precision(results):
     true_positives = 0
     false_positives = 0
     for result in results:
-        pred = result["prediction"]
+        pred = result["prediction"].lower()
         gt = result["ground_truth"]
-        if gt == "yes" and pred == "yes":
+        if "yes" in pred and "no" in pred:
+            continue
+        if gt == "yes" and "yes" in pred:
             true_positives += 1
-        elif gt == "no" and pred == "yes":
+        elif gt == "no" and "yes" in pred:
             false_positives += 1
     precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
     return precision
@@ -52,11 +54,13 @@ def pope_aggregate_recall(results):
     true_positives = 0
     false_negatives = 0
     for result in results:
-        pred = result["prediction"]
+        pred = result["prediction"].lower()
         gt = result["ground_truth"]
-        if gt == "yes" and pred == "yes":
+        if "yes" in pred and "no" in pred:
+            continue
+        if gt == "yes" and "yes" in pred:
             true_positives += 1
-        elif gt == "yes" and pred == "no":
+        elif gt == "yes" and "no" in pred:
             false_negatives += 1
     recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
     return recall
