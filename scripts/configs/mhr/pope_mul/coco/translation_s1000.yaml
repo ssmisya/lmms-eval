@@ -1,0 +1,10 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/ckpts/sft_palo/llava_checkpoint_1000,peft_model_path=/mnt/petrelfs/songmingyang/songmingyang/runs/llava/dpo/checkpoints/translation_desc_dpo_on_s1000/checkpoint-2000
+  tasks: pope_mul,pope_aokvqa_mul,pope_gqa_mul,mme_mul
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=coco_translation_s1000
+  log_samples_suffix: eval_pope_mul_coco_translation_s1000
+  output_path: "./logs/"
+

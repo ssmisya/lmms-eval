@@ -195,9 +195,13 @@ class InstructBLIP(lmms):
             # Concat it into one image
             if len(visuals) > 1:
                 visuals = [process_images(visuals)]
-            inputs = self._image_processor(images=visuals, text=context, return_tensors="pt", truncation=True).to(self.device)
-
-            gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
+            if len(visuals) > 0:
+                inputs = self._image_processor(images=visuals, text=context, return_tensors="pt", truncation=True).to(self.device)
+                gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
+            else:
+                inputs = self._image_processor(text=context, return_tensors="pt", truncation=True).to(self.device)
+                gen_kwargs["image_sizes"] = []
+                inputs["pixel_values"]=torch.zeros(1,3,190,190).to(self.model.device).to(self.model.dtype)
             if "max_new_tokens" not in gen_kwargs:
                 gen_kwargs["max_new_tokens"] = 1024
             if "temperature" not in gen_kwargs:

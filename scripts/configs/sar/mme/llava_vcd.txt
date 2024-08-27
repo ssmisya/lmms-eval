@@ -1,0 +1,32 @@
+|  Tasks   |Version|Filter|n-shot|              Metric              |  Value  |   |Stderr|
+|----------|-------|------|-----:|----------------------------------|--------:|---|------|
+|mme_mul_en|Yaml   |none  |     0|mme_percetion_score               |1403.0013|±  |N/A   |
+|          |       |none  |     0|mme_existence_acc                 |  91.6667|±  |N/A   |
+|          |       |none  |     0|mme_existence_acc_plus            |  86.6667|±  |N/A   |
+|          |       |none  |     0|mme_count_acc                     |  78.3333|±  |N/A   |
+|          |       |none  |     0|mme_count_acc_plus                |  60.0000|±  |N/A   |
+|          |       |none  |     0|mme_position_acc                  |  78.3333|±  |N/A   |
+|          |       |none  |     0|mme_position_acc_plus             |  60.0000|±  |N/A   |
+|          |       |none  |     0|mme_color_acc                     |  88.3333|±  |N/A   |
+|          |       |none  |     0|mme_color_acc_plus                |  76.6667|±  |N/A   |
+|          |       |none  |     0|mme_posters_acc                   |  74.1497|±  |N/A   |
+|          |       |none  |     0|mme_posters_acc_plus              |  51.7007|±  |N/A   |
+|          |       |none  |     0|mme_celebrity_acc                 |  72.3529|±  |N/A   |
+|          |       |none  |     0|mme_celebrity_acc_plus            |  50.5882|±  |N/A   |
+|          |       |none  |     0|mme_scene_acc                     |  81.2500|±  |N/A   |
+|          |       |none  |     0|mme_scene_acc_plus                |  65.0000|±  |N/A   |
+|          |       |none  |     0|mme_landmark_acc                  |  79.6482|±  |N/A   |
+|          |       |none  |     0|mme_landmark_acc_plus             |  62.3116|±  |N/A   |
+|          |       |none  |     0|mme_artwork_acc                   |  66.0000|±  |N/A   |
+|          |       |none  |     0|mme_artwork_acc_plus              |  42.5000|±  |N/A   |
+|          |       |none  |     0|mme_OCR_acc                       |  77.5000|±  |N/A   |
+|          |       |none  |     0|mme_OCR_acc_plus                  |  60.0000|±  |N/A   |
+|          |       |none  |     0|mme_cognition_score               | 328.9286|±  |N/A   |
+|          |       |none  |     0|mme_commonsense_reasoning_acc     |  69.2857|±  |N/A   |
+|          |       |none  |     0|mme_commonsense_reasoning_acc_plus|  47.1429|±  |N/A   |
+|          |       |none  |     0|mme_numerical_calculation_acc     |  40.0000|±  |N/A   |
+|          |       |none  |     0|mme_numerical_calculation_acc_plus|  10.0000|±  |N/A   |
+|          |       |none  |     0|mme_text_translation_acc          |  52.5000|±  |N/A   |
+|          |       |none  |     0|mme_text_translation_acc_plus     |  15.0000|±  |N/A   |
+|          |       |none  |     0|mme_code_reasoning_acc            |  60.0000|±  |N/A   |
+|          |       |none  |     0|mme_code_reasoning_acc_plus       |  35.0000|±  |N/A   |

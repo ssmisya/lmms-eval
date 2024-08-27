@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b,peft_model_path=/mnt/petrelfs/songmingyang/songmingyang/runs/llava/dpo/checkpoints/direct_dpo
+  tasks: pope_mul
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=direct_dpo
+  log_samples_suffix: direct_dpo
+  output_path: "./logs/"
+

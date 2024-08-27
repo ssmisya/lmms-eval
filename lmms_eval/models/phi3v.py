@@ -34,7 +34,7 @@ class Phi3v(lmms):
         self,
         model_id_name: str = "microsoft/Phi-3-vision-128k-instruct",
         device: str = "cuda",
-        dtype: Optional[Union[str, torch.dtype]] = "auto",
+        dtype: Optional[Union[str, torch.dtype]] = torch.float16,
         batch_size: int = 1,
         trust_remote_code: Optional[bool] = True,
         use_cache: bool = True,
@@ -184,7 +184,10 @@ class Phi3v(lmms):
             assert len(contexts) == 1
             #
             context = contexts[0]
-            input_ids = self._processor(text=context, images=visuals, return_tensors="pt").to(self._device, self.model.dtype)
+            if visuals is not None and len(visuals) > 0:
+                input_ids = self._processor(text=context, images=visuals, return_tensors="pt").to(self._device, self.model.dtype)
+            else:
+                input_ids = self._processor(text=context, return_tensors="pt").to(self._device, self.model.dtype)
             # Setting default parameters.
             if "max_new_tokens" not in gen_kwargs:
                 gen_kwargs["max_new_tokens"] = 1024

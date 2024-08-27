@@ -1,0 +1,141 @@
+# tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+#pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: pope
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_pope
+#   log_samples_suffix: phi3v_pope
+#   output_path: "./logs/robustlmm/other_models/phi3v/pope"
+
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: mme
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_mme
+#   log_samples_suffix: phi3v_mme
+#   output_path: "./logs/robustlmm/other_models/phi3v/mme"
+
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: vqav2
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_vqav2
+#   log_samples_suffix: phi3v_vqav2
+#   output_path: "./logs/robustlmm/other_models/phi3v/vqav2"
+
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: gqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_gqa
+#   log_samples_suffix: phi3v_gqa
+#   output_path: "./logs/robustlmm/other_models/phi3v/gqa"
+
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: vizwiz_vqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_vizwiz_vqa
+#   log_samples_suffix: phi3v_vizwiz_vqa
+#   output_path: "./logs/robustlmm/other_models/phi3v/vizwiz_vqa"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: scienceqa_full
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_scienceqa_full
+  log_samples_suffix: phi3v_scienceqa_full
+  output_path: "./logs/robustlmm/other_models/phi3v/scienceqa_full"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: seedbench
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_seedbench
+  log_samples_suffix: phi3v_seedbench
+  output_path: "./logs/robustlmm/other_models/phi3v/seedbench"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: seedbench-2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_seedbench-2
+  log_samples_suffix: phi3v_seedbench-2
+  output_path: "./logs/robustlmm/other_models/phi3v/seedbench-2"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: refcoco
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_refcoco
+  log_samples_suffix: phi3v_refcoco
+  output_path: "./logs/robustlmm/other_models/phi3v/refcoco"
+
+- model: phi3v 
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: refcoco+
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_refcoco+
+  log_samples_suffix: phi3v_refcoco+
+  output_path: "./logs/robustlmm/other_models/phi3v/refcoco+"
+
+- model: phi3v 
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: mmmu
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_mmmu
+  log_samples_suffix: phi3v_mmmu
+  output_path: "./logs/robustlmm/other_models/phi3v/mmmu"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: textvqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_textvqa
+  log_samples_suffix: phi3v_textvqa
+  output_path: "./logs/robustlmm/other_models/phi3v/textvqa"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: ok_vqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_ok_vqa
+  log_samples_suffix: phi3v_ok_vqa
+  output_path: "./logs/robustlmm/other_models/phi3v/ok_vqa"
+
+- model: phi3v
+  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+  tasks: flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_flickr30k
+  log_samples_suffix: phi3v_flickr30k
+  output_path: "./logs/robustlmm/other_models/phi3v/flickr30k"

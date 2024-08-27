@@ -1,0 +1,10 @@
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/code/mm/MAPO/mhr/alignment/models/cogvlm/CogVLM/finetune_demo/checkpoints/merged_lora_cogvlm490,max_length=4096
+  tasks: pope_mul_en,pope_mul_ru,pope_mul_de,pope_mul_zh,pope_mul_ja,pope_mul_fr,pope_mul_es,pope_mul_pt,pope_mul_uk,pope_mul_bg,pope_mul_tr,pope_mul_ar,pope_mul_ko
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_sft5k_pope_popular
+  log_samples_suffix: cogvlm_sft5k_pope_popular
+  output_path: "./logs/mhr/cogvlm"
+

@@ -2,6 +2,8 @@ import json
 import re
 from collections import Counter, defaultdict
 from lmms_eval.tasks._task_utils.file_utils import generate_submission_file
+import random
+import numpy as np
 
 
 def q_bench_doc_to_text(doc, model_specific_prompt_kwargs):

@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/alla09_tw_tail_lm_rewrite_diff/llava_v1_5
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=alla09_tw_tail_lm_rewrite_diff
+  log_samples_suffix: alla09_tw_tail_lm_rewrite_diff
+  output_path: "./logs/robustlmm/meta_clip/alla09_tw_tail_lm_rewrite_diff"

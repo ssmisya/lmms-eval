@@ -1,0 +1,10 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/ckpts/sft_palo/llava_checkpoint_1000,peft_model_path=/mnt/petrelfs/songmingyang/songmingyang/model/mm/ckpts/dpo_data_scale/hallu_pref_lang_eq_1_0_1_2000
+  batch_size: 1
+  tasks: pope_aokvqa_mul
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=aokvqa_loss_101
+  log_samples_suffix: eval_pope_mul_aokvqa_loss_101
+  output_path: "./logs/"
+

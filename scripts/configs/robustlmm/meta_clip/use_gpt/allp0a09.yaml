@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/comp_all_0_9/llava_v1_5
+  tasks: mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=usegpt_comp_all_0_9
+  log_samples_suffix: usegpt_comp_all_0_9
+  output_path: "./logs/robustlmm/meta_clip/usegpt/comp_all_0_9"

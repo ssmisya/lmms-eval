@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/toc_a1_aug_665k/llava_v1_5
+  tasks: mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=usegpt_allp0a1diff
+  log_samples_suffix: usegpt_allp0a1diff
+  output_path: "./logs/robustlmm/meta_clip/usegpt/allp0a1diff"

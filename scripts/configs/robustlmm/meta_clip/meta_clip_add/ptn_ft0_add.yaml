@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/add_p0/llava_v1_5
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,mmbench,seedbench,seedbench-2,llava_in_the_wild,llava_bench_coco,mmvet,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,hallusion_bench_image
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=eval_all_meta_clip_ptn_ft0_add
+  log_samples_suffix: eval_all_meta_clip_ptn_ft0_add
+  output_path: "./logs/robustlmm/meta_clip"

@@ -89,11 +89,10 @@ class ShareGPT4V(lmms):
             self.device_map = device_map
 
         llava_model_args = {}
-        llava_model_args["attn_implementation"] = attn_implementation
         if customized_config:
             llava_model_args["customized_config"] = customized_config
-        if attn_implementation is not None:
-            llava_model_args["attn_implementation"] = attn_implementation
+        # if attn_implementation is not None:
+        #     llava_model_args["attn_implementation"] = attn_implementation
         if "use_flash_attention_2" in kwargs:
             llava_model_args["use_flash_attention_2"] = kwargs["use_flash_attention_2"]
 

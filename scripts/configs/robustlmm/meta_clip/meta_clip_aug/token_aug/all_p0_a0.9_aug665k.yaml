@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/all_a09_aug_tokendiff_665k/llava_v1_5
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=all_a09_aug_tokendiff_665k
+  log_samples_suffix: all_a09_aug_tokendiff_665k
+  output_path: "./logs/robustlmm/meta_clip"

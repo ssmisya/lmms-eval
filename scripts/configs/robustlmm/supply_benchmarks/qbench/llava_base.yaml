@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b
+  tasks: qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qbench_llavabase
+  log_samples_suffix: qbench_llavabase
+  output_path: "./logs/robustlmm/meta_clip/supply_benchmarks/qbench_llavabase"

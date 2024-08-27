@@ -1,0 +1,10 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/ckpts/sft_palo/llava_checkpoint_1000,peft_model_path=/mnt/petrelfs/songmingyang/songmingyang/runs/llava/dpo/checkpoints/palo_sfted_self_hallu_human
+  tasks: mme_mul
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval-mme,job_type=eval,name=llava_s1000_dfinal
+  log_samples_suffix: mme_llava_s1000_dfinal
+  output_path: "./logs/"
+

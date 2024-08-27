@@ -56,3 +56,15 @@ model_specific_prompt_kwargs:
   mplug_owl :
     img_token : <image>
     post_prompt : "Answer with the option's letter from the given choices directly."
+  cogvlm_sat :
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."
+  qwen_vl :
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."
+  phi3v:
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."
+  instruct_blip :
+    img_token : <image>
+    post_prompt : "Answer with the option's letter from the given choices directly."

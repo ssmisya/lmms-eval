@@ -40,14 +40,14 @@ AVAILABLE_MODELS = {
     "phi3v": "Phi3v",
     "cogvlm_sat": "CogVLM_sat",
     "sharegpt4v": "ShareGPT4V",
-    "mplug_owl": "mPLUG_Owl"
+    "mplug_owl": "mPLUG_Owl",
     "tinyllava": "TinyLlava",
     "llava_hf": "LlavaHf",
     "longva": "LongVA",
     "llava_hf": "LlavaHf",
     "longva": "LongVA",
     "vila": "VILA",
-    "mantis": "Mantis"
+    "mantis": "Mantis",
 }
 
 for model_name, model_class in AVAILABLE_MODELS.items():

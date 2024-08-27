@@ -16,7 +16,10 @@ def pope_process_results(doc, results):
     pred = results[0].lower().strip()
     gt_ans = doc["answer"].lower().strip()
     assert gt_ans in ["yes", "no"]
-    score = 1.0 if pred == gt_ans else 0.0
+    if "yes" in pred and "no" in pred:
+        score = 0.0
+    else:
+        score = 1.0 if gt_ans in pred else 0.0
     return {
         "pope_accuracy": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans},
         "pope_precision": {"question_id": doc["question_id"], "score": score, "prediction": pred, "ground_truth": gt_ans},

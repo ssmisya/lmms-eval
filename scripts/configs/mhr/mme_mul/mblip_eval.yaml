@@ -1,0 +1,10 @@
+- model: mblip
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/mblip/mblip-mt0-xl
+  tasks: mme_mul
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=mme_mblip
+  log_samples_suffix: mme_mblip
+  output_path: "./logs/"
+

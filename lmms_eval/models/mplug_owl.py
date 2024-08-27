@@ -71,7 +71,7 @@ class mPLUG_Owl(lmms):
         
         self._model = MplugOwlForConditionalGeneration.from_pretrained(
             pretrained,
-            torch_dtype=torch.bfloat16,
+            torch_dtype=torch.float16,
         )
         self._image_processor = MplugOwlImageProcessor.from_pretrained(pretrained)
         self._tokenizer = AutoTokenizer.from_pretrained(pretrained)
@@ -290,7 +290,7 @@ class mPLUG_Owl(lmms):
                 for context in contexts:
                     question = context
                     image_tokens = ""
-                    prompts = self.prompt_template.format(question=question)
+                    prompts = self.prompt_template.format(question=question,image_tokens="")
                     question_input.append(prompts)
 
             # input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors="pt").unsqueeze(0).to(self.device)

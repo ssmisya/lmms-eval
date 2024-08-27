@@ -1,0 +1,9 @@
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1,max_length=4096,language_processor_version=chat
+  tasks: pope_mul_10lang
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_base_10_all
+  log_samples_suffix: cogvlm_chat_base_10_all
+  output_path: "./logs/mhr/cogvlm"

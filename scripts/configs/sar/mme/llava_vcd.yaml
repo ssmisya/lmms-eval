@@ -1,0 +1,11 @@
+- model: llava_vcd
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b,use_cd=True
+  gen_kwargs: temperature=0.7,top_p=1.0
+  tasks: mme_mul_en
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=sar-eval,job_type=eval,name=llava_vcd_mme
+  log_samples_suffix: llava_vcd_mme
+  output_path: "./logs/"
+

@@ -1,0 +1,9 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/plainaug_newcap_toca09/llava_v1_5
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=plainaug_newcap_toca09
+  log_samples_suffix: plainaug_newcap_toca09
+  output_path: "./logs/robustlmm/meta_clip/plainaug_newcap_toca09"

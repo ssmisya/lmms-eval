@@ -1,0 +1,10 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b
+  batch_size: 1
+  tasks: pope_mul_coco_a_r,pope_mul_aokvqa_a_r,pope_mul_gqa_a_r
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=baseline_supply
+  log_samples_suffix: baseline_supply
+  output_path: "./logs/"
+

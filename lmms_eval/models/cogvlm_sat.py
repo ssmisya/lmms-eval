@@ -25,6 +25,7 @@ from sat.model import AutoModel
 from sat.mpu import get_model_parallel_world_size
 from utils.utils import chat, llama2_tokenizer, llama2_text_processor_inference, get_image_processor
 from utils.models import CogAgentModel, CogVLMModel
+from PIL import Image 
 
 warnings.filterwarnings("ignore")
 
@@ -38,8 +39,8 @@ class CogVLM_sat(lmms):
         device: Optional[str] = "cuda",
         dtype: Optional[Union[str, torch.dtype]] = "auto",
         batch_size: Optional[Union[int, str]] = 1,
-        bf16=True,
-        fp16=False,
+        bf16=False,
+        fp16=True,
         language_processor_version="vqa",
         local_tokenizer="/mnt/petrelfs/songmingyang/songmingyang/model/others/vicuna-7b-v1.5",
         max_length=4096,
@@ -237,9 +238,11 @@ class CogVLM_sat(lmms):
                 
             assert self.batch_size_per_gpu == 1, "Do not support batch_size_per_gpu > 1 for now"
             context = contexts[0]
-            visual = visuals[0]
+            if len(visuals) == 0:
+                visual = Image.new('RGB', (600, 800))
+            else:
+                visual = visuals[0]
             
-
             gen_kwargs["image_sizes"] = [visuals[idx].size for idx in range(len(visuals))]
             if "max_new_tokens" not in gen_kwargs:
                 gen_kwargs["max_new_tokens"] = 1024
@@ -249,33 +252,34 @@ class CogVLM_sat(lmms):
                 gen_kwargs["top_p"] = None
             if "num_beams" not in gen_kwargs:
                 gen_kwargs["num_beams"] = 1
-            try:
-                history = None
-                cache_image = visual
-                eval_logger.debug(f"Input:{context} Img:{visual}")
-                response, _ , _ = chat(
-                        None,
-                        self.model,
-                        self._text_processor_infer,
-                        self._image_processor,
-                        context,
-                        history=history,
-                        cross_img_processor=self._cross_image_processor,
-                        image=cache_image,
-                        max_length=self.max_length,
-                        top_p=gen_kwargs["top_p"],
-                        temperature=gen_kwargs["temperature"]+0.01,
-                        top_k=gen_kwargs["num_beams"],
-                        invalid_slices=self._text_processor_infer.invalid_slices,
-                        args=argparse.Namespace(
-                                bf16=self.bf16,
-                                stream_chat=False,
-                                **gen_kwargs
-                            ),
-                        )
-            except Exception as e:
-                eval_logger.error(f"Error {e} in generating")
-                response = ""
+            # try:
+            history = None
+            cache_image = visual
+            eval_logger.debug(f"Input:{context} Img:{visual}")
+            response, _ , _ = chat(
+                    None,
+                    self.model,
+                    self._text_processor_infer,
+                    self._image_processor,
+                    context,
+                    history=history,
+                    cross_img_processor=self._cross_image_processor,
+                    image=cache_image,
+                    max_length=self.max_length,
+                    # top_p=gen_kwargs["top_p"],
+                    temperature=gen_kwargs["temperature"]+0.01,
+                    top_k=gen_kwargs["num_beams"],
+                    invalid_slices=self._text_processor_infer.invalid_slices,
+                    args=argparse.Namespace(
+                            bf16=self.bf16,
+                            fp16=self.fp16,
+                            stream_chat=False,
+                            **gen_kwargs
+                        ),
+                    )
+            # except Exception as e:
+            #     eval_logger.error(f"Error {e} in generating")
+            #     response = ""
             # text_outputs = self.tokenizer.batch_decode(cont, skip_special_tokens=True)[0].strip()
             res.append(response)
             eval_logger.debug(f"{response}")

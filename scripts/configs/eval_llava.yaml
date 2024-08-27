@@ -1,0 +1,10 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,mmbench,seedbench,seedbench-2,llava_in_the_wild,llava_bench_coco,mmvet,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,hallusion_bench_image
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=eval_all_llava_baseline
+  log_samples_suffix: eval_all_llava_baseline
+  output_path: "./logs/robustlmm/meta_clip"
+

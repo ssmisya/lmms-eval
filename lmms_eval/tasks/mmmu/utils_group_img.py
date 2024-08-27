@@ -20,7 +20,9 @@ def add_order_label(image, label, font_size=40):
 
     # Define font for the label
     # font_path = fm.findfont(fm.FontProperties(family=font_family))
-    font_path = "./arial.ttf"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    font_path = os.path.join(dir_path, './arial.ttf')
+    # font_path = "/mnt/petrelfs/songmingyang/code/tools/lmms-eval/lmms_eval/tasks/mmmu/arial.ttf"
     font = ImageFont.truetype(font_path, font_size)
 
     # Calculate text size and position

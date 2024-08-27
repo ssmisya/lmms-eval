@@ -1,0 +1,141 @@
+ # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+ # pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: pope
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_pope
+  log_samples_suffix: cogvlm_chat_pope
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/pope"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: mme
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_mme
+  log_samples_suffix: cogvlm_chat_mme
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/mme"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: vqav2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_vqav2
+  log_samples_suffix: cogvlm_chat_vqav2
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/vqav2"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: gqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_gqa
+  log_samples_suffix: cogvlm_chat_gqa
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/gqa"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: vizwiz_vqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_vizwiz_vqa
+  log_samples_suffix: cogvlm_chat_vizwiz_vqa
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/vizwiz_vqa"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: scienceqa_full
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_scienceqa_full
+  log_samples_suffix: cogvlm_chat_scienceqa_full
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/scienceqa_full"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: seedbench
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_seedbench
+  log_samples_suffix: cogvlm_chat_seedbench
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/seedbench"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: seedbench-2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_seedbench-2
+  log_samples_suffix: cogvlm_chat_seedbench-2
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/seedbench-2"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: refcoco
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_refcoco
+  log_samples_suffix: cogvlm_chat_refcoco
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/refcoco"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: refcoco+
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_refcoco+
+  log_samples_suffix: cogvlm_chat_refcoco+
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/refcoco+"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: mmmu
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_mmmu
+  log_samples_suffix: cogvlm_chat_mmmu
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/mmmu"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: textvqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_textvqa
+  log_samples_suffix: cogvlm_chat_textvqa
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/textvqa"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: ok_vqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_ok_vqa
+  log_samples_suffix: cogvlm_chat_ok_vqa
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/ok_vqa"
+
+- model: cogvlm_sat
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
+  tasks: flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=cogvlm_chat_flickr30k
+  log_samples_suffix: cogvlm_chat_flickr30k
+  output_path: "./logs/robustlmm/other_models/cogvlm_sat/flickr30k"
