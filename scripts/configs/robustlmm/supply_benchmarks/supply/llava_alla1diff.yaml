@@ -1,0 +1,29 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/toc_a1_aug_665k/llava_v1_5
+  tasks: seedbench_2,seedbench_2_plus
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=seedbench_2_llavaallp0a1diff
+  log_samples_suffix: seedbench_2
+  output_path: "./logs/robustlmm/final_reses/llava_res/llava_aug"
+
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/toc_a1_aug_665k/llava_v1_5
+  tasks: qbenchs_dev,mmstar,mmbench_en_dev,mmbench_cn_dev
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=mmsupply_llavaallp0a1
+  log_samples_suffix: mmsupply
+  output_path: "./logs/robustlmm/final_reses/llava_res/llava_aug"
+
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/toc_a1_aug_665k/llava_v1_5
+  tasks: cmmmu
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=mmsupply_llavaallp0a1
+  log_samples_suffix: mmsupply
+  output_path: "./logs/robustlmm/final_reses/llava_res/llava_aug"

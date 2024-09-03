@@ -1,10 +1,189 @@
+# - model: qwen_vl
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+#   # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+#   tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench_2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,qbenchs_dev,mmstar,mmbench_en_dev,mmbench_cn_dev
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat
+#   log_samples_suffix: qwen_vl_chat
+#   output_path: "./logs/robustlmm/other_models"
 - model: qwen_vl
   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
-  # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
-  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+  tasks: pope
   batch_size: 1
   log_samples: true
   wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat
-  log_samples_suffix: qwen_vl_chat
-  output_path: "./logs/robustlmm/other_models"
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_pope
+  log_samples_suffix: qwen_vl_chat_pope
+  output_path: "./logs/robustlmm/other_models/qwen_vl/pope"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: mme
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mme
+  log_samples_suffix: qwen_vl_chat_mme
+  output_path: "./logs/robustlmm/other_models/qwen_vl/mme"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: vqav2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_vqav2
+  log_samples_suffix: qwen_vl_chat_vqav2
+  output_path: "./logs/robustlmm/other_models/qwen_vl/vqav2"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: gqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_gqa
+  log_samples_suffix: qwen_vl_chat_gqa
+  output_path: "./logs/robustlmm/other_models/qwen_vl/gqa"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: vizwiz_vqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_vizwiz_vqa
+  log_samples_suffix: qwen_vl_chat_vizwiz_vqa
+  output_path: "./logs/robustlmm/other_models/qwen_vl/vizwiz_vqa"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: scienceqa_full
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_scienceqa_full
+  log_samples_suffix: qwen_vl_chat_scienceqa_full
+  output_path: "./logs/robustlmm/other_models/qwen_vl/scienceqa_full"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: seedbench
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_seedbench
+  log_samples_suffix: qwen_vl_chat_seedbench
+  output_path: "./logs/robustlmm/other_models/qwen_vl/seedbench"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: seedbench_2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_seedbench_2
+  log_samples_suffix: qwen_vl_chat_seedbench_2
+  output_path: "./logs/robustlmm/other_models/qwen_vl/seedbench_2"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: refcoco
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_refcoco
+  log_samples_suffix: qwen_vl_chat_refcoco
+  output_path: "./logs/robustlmm/other_models/qwen_vl/refcoco"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: refcoco+
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_refcoco_plus
+  log_samples_suffix: qwen_vl_chat_refcoco_plus
+  output_path: "./logs/robustlmm/other_models/qwen_vl/refcoco_plus"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: mmmu
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mmmu
+  log_samples_suffix: qwen_vl_chat_mmmu
+  output_path: "./logs/robustlmm/other_models/qwen_vl/mmmu"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: textvqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_textvqa
+  log_samples_suffix: qwen_vl_chat_textvqa
+  output_path: "./logs/robustlmm/other_models/qwen_vl/textvqa"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: ok_vqa
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_ok_vqa
+  log_samples_suffix: qwen_vl_chat_ok_vqa
+  output_path: "./logs/robustlmm/other_models/qwen_vl/ok_vqa"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_flickr30k
+  log_samples_suffix: qwen_vl_chat_flickr30k
+  output_path: "./logs/robustlmm/other_models/qwen_vl/flickr30k"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: qbenchs_dev
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_qbenchs_dev
+  log_samples_suffix: qwen_vl_chat_qbenchs_dev
+  output_path: "./logs/robustlmm/other_models/qwen_vl/qbenchs_dev"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: mmstar
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mmstar
+  log_samples_suffix: qwen_vl_chat_mmstar
+  output_path: "./logs/robustlmm/other_models/qwen_vl/mmstar"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: mmbench_en_dev
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mmbench_en_dev
+  log_samples_suffix: qwen_vl_chat_mmbench_en_dev
+  output_path: "./logs/robustlmm/other_models/qwen_vl/mmbench_en_dev"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: mmbench_cn_dev
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mmbench_cn_dev
+  log_samples_suffix: qwen_vl_chat_mmbench_cn_dev
+  output_path: "./logs/robustlmm/other_models/qwen_vl/mmbench_cn_dev"

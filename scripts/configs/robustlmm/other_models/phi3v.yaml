@@ -1,5 +1,5 @@
 # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
-#pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+# pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
 # - model: phi3v
 #   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
 #   tasks: pope
@@ -72,7 +72,7 @@
 
 # - model: phi3v
 #   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
-#   tasks: seedbench-2
+#   tasks: seedbench_2
 #   batch_size: 1
 #   log_samples: true
 #   wandb_log_samples: true
@@ -120,22 +120,32 @@
 #   log_samples_suffix: phi3v_textvqa
 #   output_path: "./logs/robustlmm/other_models/phi3v/textvqa"
 
-- model: phi3v
-  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
-  tasks: ok_vqa
-  batch_size: 1
-  log_samples: true
-  wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_ok_vqa
-  log_samples_suffix: phi3v_ok_vqa
-  output_path: "./logs/robustlmm/other_models/phi3v/ok_vqa"
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: ok_vqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_ok_vqa
+#   log_samples_suffix: phi3v_ok_vqa
+#   output_path: "./logs/robustlmm/other_models/phi3v/ok_vqa"
+
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: flickr30k
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_flickr30k
+#   log_samples_suffix: phi3v_flickr30k
+#   output_path: "./logs/robustlmm/other_models/phi3v/flickr30k"
 
 - model: phi3v
   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
-  tasks: flickr30k
+  tasks: mmbench_en_dev,mmbench_cn_dev,mmstar,qbenchs_dev
   batch_size: 1
   log_samples: true
   wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_flickr30k
-  log_samples_suffix: phi3v_flickr30k
-  output_path: "./logs/robustlmm/other_models/phi3v/flickr30k"
+  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_mmbench_en_dev
+  log_samples_suffix: phi3v_mmbench_en_dev
+  output_path: "./logs/robustlmm/other_models/phi3v/mmbench_en_dev"

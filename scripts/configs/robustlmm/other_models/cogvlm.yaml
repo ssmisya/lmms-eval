@@ -142,7 +142,7 @@
 
 - model: cogvlm_sat
   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/cogvlm/base/cogvlm-chat-v1.1
-  tasks: qbench
+  tasks: qbenchs_dev
   batch_size: 1
   log_samples: true
   wandb_log_samples: true

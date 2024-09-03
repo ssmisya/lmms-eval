@@ -1,0 +1,19 @@
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b
+  tasks: qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar,seedbench_2,seedbench_2_plus
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=supply_llavabase
+  log_samples_suffix: supply_llavabase
+  output_path: "./logs/robustlmm/final_reses/llava_res/llava_base"
+
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/others/llava-v1.5-7b
+  tasks: cmmmu
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=supply_llavabase
+  log_samples_suffix: supply_llavabase
+  output_path: "./logs/robustlmm/final_reses/llava_res/llava_base"
