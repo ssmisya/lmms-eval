@@ -1,0 +1,9 @@
+- model: sharegpt4v
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/pt_tocp0a1_ft_orig,model_name=sharegpt4v
+  tasks: qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qbench_share4v_pt_tocp0a1_ft_orig
+  log_samples_suffix: qbench_share4v_pt_tocp0a1_ft_orig
+  output_path: "./logs/robustlmm/meta_clip/supply_benchmarks/qbench_share4v_pt_tocp0a1_ft_orig"

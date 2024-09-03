@@ -1,0 +1,202 @@
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench_2,seedbench_2_plus,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig
+#   log_samples_suffix: pt_bal1174k_ft_orig
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: pope
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_pope
+#   log_samples_suffix: pt_bal1174k_ft_orig_pope
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/pope"
+
+- model: sharegpt4v
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+  tasks: mme,mmbench_cn_dev
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_mme
+  log_samples_suffix: pt_bal1174k_ft_orig_mme
+  output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/mme_mmbcn"
+
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: gqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_gqa
+#   log_samples_suffix: pt_bal1174k_ft_orig_gqa
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/gqa"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: vizwiz_vqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_vizwiz_vqa
+#   log_samples_suffix: pt_bal1174k_ft_orig_vizwiz_vqa
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/vizwiz_vqa"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: scienceqa_full
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_scienceqa_full
+#   log_samples_suffix: pt_bal1174k_ft_orig_scienceqa_full
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/scienceqa_full"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: seedbench
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_seedbench
+#   log_samples_suffix: pt_bal1174k_ft_orig_seedbench
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/seedbench"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: seedbench_2
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_seedbench_2
+#   log_samples_suffix: pt_bal1174k_ft_orig_seedbench_2
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/seedbench_2"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: seedbench_2_plus
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_seedbench_2_plus
+#   log_samples_suffix: pt_bal1174k_ft_orig_seedbench_2_plus
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/seedbench_2_plus"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: refcoco
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_refcoco
+#   log_samples_suffix: pt_bal1174k_ft_orig_refcoco
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/refcoco"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: refcoco+
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_refcoco+
+#   log_samples_suffix: pt_bal1174k_ft_orig_refcoco+
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/refcoco+"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: mmmu
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_mmmu
+#   log_samples_suffix: pt_bal1174k_ft_orig_mmmu
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/mmmu"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: textvqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_textvqa
+#   log_samples_suffix: pt_bal1174k_ft_orig_textvqa
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/textvqa"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: ok_vqa
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_ok_vqa
+#   log_samples_suffix: pt_bal1174k_ft_orig_ok_vqa
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/ok_vqa"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: flickr30k
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_flickr30k
+#   log_samples_suffix: pt_bal1174k_ft_orig_flickr30k
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/flickr30k"
+
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: qbenchs_dev
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_qbenchs_dev
+#   log_samples_suffix: pt_bal1174k_ft_orig_qbenchs_dev
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/qbenchs_dev"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: mmbench_en_dev
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_mmbench_en_dev
+#   log_samples_suffix: pt_bal1174k_ft_orig_mmbench_en_dev
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/mmbench_en_dev"  
+
+# - model: sharegpt4v 
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: mmbench_cn_dev
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_mmbench_cn_dev
+#   log_samples_suffix: pt_bal1174k_ft_orig_mmbench_cn_dev
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/mmbench_cn_dev"
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: mmstar
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_mmstar
+#   log_samples_suffix: pt_bal1174k_ft_orig_mmstar
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/mmstar"
+
+
+# - model: sharegpt4v
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/pt_bal1174k_ft_orig,model_name=sharegpt4v
+#   tasks: vqav2
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=pt_bal1174k_ft_orig_vqav2
+#   log_samples_suffix: pt_bal1174k_ft_orig_vqav2
+#   output_path: "./logs/robustlmm/sharegpt4v/new/balanced/pt_bal1174k_ft_orig/vqav2"

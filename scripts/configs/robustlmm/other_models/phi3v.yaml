@@ -50,15 +50,15 @@
 #   log_samples_suffix: phi3v_vizwiz_vqa
 #   output_path: "./logs/robustlmm/other_models/phi3v/vizwiz_vqa"
 
-- model: phi3v
-  model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
-  tasks: scienceqa_full
-  batch_size: 1
-  log_samples: true
-  wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=phi3v_scienceqa_full
-  log_samples_suffix: phi3v_scienceqa_full
-  output_path: "./logs/robustlmm/other_models/phi3v/scienceqa_full"
+# - model: phi3v
+#   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct
+#   tasks: scienceqa_full
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=phi3v_scienceqa_full
+#   log_samples_suffix: phi3v_scienceqa_full
+#   output_path: "./logs/robustlmm/other_models/phi3v/scienceqa_full"
 
 - model: phi3v
   model_args: model_id_name=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Phi-3-vision-128k-instruct

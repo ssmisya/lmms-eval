@@ -1,0 +1,11 @@
+- model: sharegpt4v
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/sharegpt4v/ft/new/balance/ptall1168k_diff_ftorig,model_name=sharegpt4v
+  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench_2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=ptall1168k_diff_ftorig
+  log_samples_suffix: ptall1168k_diff_ftorig
+  output_path: "./logs/robustlmm/sharegpt4v/new/aug/ptall1168k_diff_ftorig"
+
+
