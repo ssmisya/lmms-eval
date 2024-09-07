@@ -8,35 +8,27 @@
 #   wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat
 #   log_samples_suffix: qwen_vl_chat
 #   output_path: "./logs/robustlmm/other_models"
-- model: qwen_vl
-  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
-  tasks: pope
-  batch_size: 1
-  log_samples: true
-  wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_pope
-  log_samples_suffix: qwen_vl_chat_pope
-  output_path: "./logs/robustlmm/other_models/qwen_vl/pope"
+# - model: qwen_vl
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+#   tasks: pope
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_pope
+#   log_samples_suffix: qwen_vl_chat_pope
+#   output_path: "./logs/robustlmm/other_models/qwen_vl/pope"
 
-- model: qwen_vl
-  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
-  tasks: mme
-  batch_size: 1
-  log_samples: true
-  wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mme
-  log_samples_suffix: qwen_vl_chat_mme
-  output_path: "./logs/robustlmm/other_models/qwen_vl/mme"
+# - model: qwen_vl
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+#   tasks: mme
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mme
+#   log_samples_suffix: qwen_vl_chat_mme
+#   output_path: "./logs/robustlmm/other_models/qwen_vl/mme"
 
-- model: qwen_vl
-  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
-  tasks: vqav2
-  batch_size: 1
-  log_samples: true
-  wandb_log_samples: true
-  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_vqav2
-  log_samples_suffix: qwen_vl_chat_vqav2
-  output_path: "./logs/robustlmm/other_models/qwen_vl/vqav2"
+
 
 - model: qwen_vl
   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
@@ -187,3 +179,13 @@
   wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_mmbench_cn_dev
   log_samples_suffix: qwen_vl_chat_mmbench_cn_dev
   output_path: "./logs/robustlmm/other_models/qwen_vl/mmbench_cn_dev"
+
+- model: qwen_vl
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/Qwen-VL-Chat
+  tasks: vqav2
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=qwen_vl_chat_vqav2
+  log_samples_suffix: qwen_vl_chat_vqav2
+  output_path: "./logs/robustlmm/other_models/qwen_vl/vqav2"
