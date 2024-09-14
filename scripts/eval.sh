@@ -31,5 +31,5 @@ accelerate launch  --config_file  ./accelerate_config.yaml \
 --verbosity INFO
 
 
-# salloc --partition=MoE --job-name="interact" --gres=gpu:4 -n1 --ntasks-per-node=1 -c 64 --quotatype="reserved"
+# salloc --partition=MoE --job-name="interact" --gres=gpu:8 -n1 --ntasks-per-node=1 -c 64 --quotatype="reserved"
 # salloc --partition=MoE --job-name="interact" --gres=gpu:1 -n1 --ntasks-per-node=1 -c 16 --quotatype="reserved"

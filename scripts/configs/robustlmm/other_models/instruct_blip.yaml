@@ -1,7 +1,19 @@
+# - model: instructblip
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/instruct_blip/instruct_blip_7b
+#   # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
+#   tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=instruct_blip_7b
+#   log_samples_suffix: instruct_blip_7b
+#   output_path: "./logs/robustlmm/other_models"
+
+
 - model: instructblip
   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/model/mm/instruct_blip/instruct_blip_7b
   # tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,mmbench_en_dev,mmbench_cn_dev,mmstar,mmvet,llava_bench_coco,llava_in_the_wild
-  tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench-2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k
+  tasks: qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
   batch_size: 1
   log_samples: true
   wandb_log_samples: true

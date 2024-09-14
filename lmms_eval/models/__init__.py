@@ -46,6 +46,7 @@ AVAILABLE_MODELS = {
     "longva": "LongVA",
     "mantis": "Mantis",
     "minicpm_v": "MiniCPM_V",
+    "mplug_owl": "mPLUG_Owl",
     "mplug_owl_video": "mplug_Owl",
     "phi3v": "Phi3v",
     "cogvlm_sat": "CogVLM_sat",

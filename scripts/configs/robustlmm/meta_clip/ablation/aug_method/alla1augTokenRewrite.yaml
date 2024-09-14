@@ -1,0 +1,20 @@
+# - model: llava
+#   model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/alla1augTokenRewrite/llava_v1_5
+#   tasks: pope,mme,vqav2,gqa,vizwiz_vqa,scienceqa_full,seedbench,seedbench_2,refcoco,refcoco+,mmmu,textvqa,ok_vqa,flickr30k,qbenchs_dev,mmbench_en_dev,mmbench_cn_dev,mmstar
+#   batch_size: 1
+#   log_samples: true
+#   wandb_log_samples: true
+#   wandb_args: project=lmms-eval,job_type=eval,name=alla1augTokenRewrite
+#   log_samples_suffix: alla1augTokenRewrite
+#   output_path: "./logs/robustlmm/meta_clip"
+
+- model: llava
+  model_args: pretrained=/mnt/petrelfs/songmingyang/songmingyang/runs/robustlmm/metaclip/finetune/alla1augTokenRewrite/llava_v1_5
+  tasks: seedbench_2,flickr30k
+  batch_size: 1
+  log_samples: true
+  wandb_log_samples: true
+  wandb_args: project=lmms-eval,job_type=eval,name=alla1augTokenRewrite
+  log_samples_suffix: supplyflik_seed2
+  output_path: "./logs/robustlmm/final_reses/ablation_res/aug_ablate/TokenRewrite"
+
